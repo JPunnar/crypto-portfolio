@@ -1,0 +1,17 @@
+{
+  "name": "crypto-portfolio",
+  "private": true,
+  "dependencies": {
+    "@rails/webpacker": "^4.2.0",
+    "axios": "^0.19.0",
+    "pnotify": "^4.0.0",
+    "vue": "^2.6.10",
+    "vue-loader": "^15.7.2",
+    "vue-template-compiler": "^2.6.10",
+    "vue-toasted": "^1.1.27",
+    "vuelidate": "^0.7.4"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^3.9.0"
+  }
+}

@@ -1,0 +1,18 @@
+#coin_inventory
+  %table.table
+    %thead
+      %th= 'Coin'
+      %th= 'Amount'
+      %th= 'Date of purchase'
+      %th= 'Wallet location'
+      %th= 'Current market value (EUR)'
+      %th= 'Option'
+    %tbody
+      %tr{"v-for" => "coin in coins"}
+        %td {{ coin.type }}
+        %td {{ coin.amount }}
+        %td {{ coin.purchased_at }}
+        %td {{ coin.location }}
+        %td {{ coin.value }}
+        %td
+          .btn.btn-warning{"v-on:click": "deleteCoin(coin.id)"} Delete

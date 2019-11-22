@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: crypto_portfolio
+
+development:
+  <<: *default
+  database: crypto_portfolio_development
+
+test:
+  <<: *default
+  database: crypto_portfolio_test
+
+production:
+  <<: *default
+  database: crypto_portfolio_production
+  password: <%= ENV['APPNAME_DATABASE_PASSWORD'] %>

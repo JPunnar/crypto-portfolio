@@ -1,0 +1,28 @@
+#coin_form
+  %form
+    .form-group
+      %label Coin type
+      %select.form-control{"v-model": "type"}
+        %option Bitcoin
+        %option Ethereum
+        %option Ripple
+    .form-group
+      %label Amount of coins
+      %input.form-control{placeholder: "Enter amount", "v-model": "amount"}
+      .small.error(v-if="!$v.amount.required") * required
+    .form-group
+      %label Location
+      %input.form-control{placeholder: "Describe location of coins", "v-model": "location"}
+      .small.error(v-if="!$v.location.required") * required
+    .form-group
+      %label Date of purchase
+      %input.form-control{type: "date", "data-provide": "datepicker", "v-model": "purchased_at"}
+      .small.error(v-if="!$v.purchased_at.required") * required
+    %button.btn.btn-secondary{"v-on:click.prevent": "addCoin", ":disabled": "isDisabled"} Submit
+
+-#
+-# #coin_form
+-#   = form_tag do
+-#     .form-group
+-#       = label_tag "Coin type"
+-#       = select_tag :coin_type, options_for_select(Coin::TYPES), required: true
