@@ -5,7 +5,7 @@ class Coin < ApplicationRecord
   TYPES = %w[Bitcoin Ethereum Ripple]
 
   validates :type, :amount, :location, :purchased_at, presence: true
-  validates :amount, numericality: { greater_than: 0 }
+  validates :amount, numericality: { greater_than: 0, less_than_or_equal_to: 10_000 }
   validates :type, inclusion: { in: TYPES }
   validates :location, length: { maximum: 250 }
 

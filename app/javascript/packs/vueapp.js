@@ -42,11 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
       deleteCoin: function(coinId) {
         if (confirm("Want to delete?")) {
           var url = 'coins/' + coinId
-          var ev = this;
-
+          
           axios.delete(url).then(response => {
-            var index = ev.coins.indexOf(ev.coins.find(x => x.id === coinId));
-            ev.$delete(ev.coins, index);
+            var index = this.coins.indexOf(this.coins.find(x => x.id === coinId));
+            this.$delete(this.coins, index);
             this.$toasted.show('Coin deleted!');
           })
         }
@@ -64,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
           amount: '',
           location: '',
           purchased_at: moment(new Date()).format('YYYY-MM-DD'),
-          csrf_token: $('meta[name="csrf-token"]').attr('content'),
           ajaxInProgress: false
       },
       validations: {
@@ -98,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           this.amount = "";
           this.location = "";
-          this.purchased_at = "";
+          this.purchased_at = moment(new Date()).format('YYYY-MM-DD');
         }
       },
       computed: {

@@ -1,9 +1,6 @@
 class BitfinexFetcher
-  URLS = %W[
-    https://api-pub.bitfinex.com/v2/tickers?symbols=tBTCEUR
-    https://api-pub.bitfinex.com/v2/tickers?symbols=tETHEUR
-    https://api-pub.bitfinex.com/v2/tickers?symbols=tXRPUSD
-  ]
+  URL = 'https://api-pub.bitfinex.com/v2/tickers?symbols=t'
+
   def get_rates
     {
       Bitcoin: get_rate('BTCEUR'),
@@ -13,6 +10,6 @@ class BitfinexFetcher
   end
 
   def get_rate(type)
-    JSON.parse(HTTParty.get("https://api-pub.bitfinex.com/v2/tickers?symbols=t#{type}").body).first.second
+    JSON.parse(HTTParty.get(URL + type).body).first.second
   end
 end

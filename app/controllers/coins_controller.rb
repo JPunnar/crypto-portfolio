@@ -1,5 +1,4 @@
 class CoinsController < ApplicationController
-
   def index
     coins = Coin.calculate_all
     render json: { coins: coins }, methods: [:value]
