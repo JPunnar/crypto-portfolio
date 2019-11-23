@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
       },
       deleteCoin: function(coinId) {
-        // this.coins.find(x => x.id === coinId);
         var url = 'coins/' + coinId
         var ev = this;
 
@@ -51,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
       },
       formatDate: function(input) {
-        return moment(input).format('MM.DD.YYYY');
+        return moment(input).format('DD.MM.YYYY');
       }
     }
   });
@@ -62,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
           type: 'Bitcoin',
           amount: '',
           location: '',
-          purchased_at: '',
+          purchased_at: moment(new Date()).format('YYYY-MM-DD'),
           csrf_token: $('meta[name="csrf-token"]').attr('content'),
           ajaxInProgress: false
       },
