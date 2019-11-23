@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
   root 'main#index'
-  resources 'coins', defaults: { format: :json }
+  resources 'coins', only: [:index, :create, :destroy], defaults: { format: :json }
 end
