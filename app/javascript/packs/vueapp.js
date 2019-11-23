@@ -40,14 +40,16 @@ document.addEventListener('DOMContentLoaded', () => {
         })
       },
       deleteCoin: function(coinId) {
-        var url = 'coins/' + coinId
-        var ev = this;
+        if (confirm("Want to delete?")) {
+          var url = 'coins/' + coinId
+          var ev = this;
 
-        axios.delete(url).then(response => {
-          var index = ev.coins.indexOf(ev.coins.find(x => x.id === coinId));
-          ev.$delete(ev.coins, index);
-          this.$toasted.show('Coin deleted!');
-        })
+          axios.delete(url).then(response => {
+            var index = ev.coins.indexOf(ev.coins.find(x => x.id === coinId));
+            ev.$delete(ev.coins, index);
+            this.$toasted.show('Coin deleted!');
+          })
+        }
       },
       formatDate: function(input) {
         return moment(input).format('DD.MM.YYYY');
