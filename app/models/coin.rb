@@ -26,6 +26,6 @@ class Coin < ApplicationRecord
   private
 
   def puchased_at_not_in_future
-    errors.add(:purchased_at, "can't be in future") if purchased_at.future?
+    errors.add(:purchased_at, "can't be in future") if purchased_at&.future?
   end
 end
