@@ -1,18 +1,17 @@
 class CoinsController < ApplicationController
 
   def index
-    # binding.pry
-    render json: { coins: Coin.all }
+    coins = Coin.calculate_all
+    render json: { coins: coins }, methods: [:value]
   end
 
   def create
-    # binding.pry
     coin = Coin.new(coin_params)
     if coin.valid?
       coin.save!
-      render json: { coin: coin.as_json }, status: :created and return
+      render json: { coin: coin.as_json(methods: [:value]) }, status: :created and return
     else
-      render json: { errors: coin.errors.full_messages }
+      render json: { errors: coin.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
