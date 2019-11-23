@@ -2,6 +2,7 @@ import Vue from 'vue/dist/vue.esm'
 import Vuelidate from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
 import Toasted from 'vue-toasted';
+import axios from 'axios';
 Vue.use(Vuelidate);
 Vue.use(Toasted, {
   position: 'top-center',
@@ -12,7 +13,7 @@ Vue.use(Toasted, {
     }
   },
   theme: 'outline',
-  duration: 2500
+  duration: 2200
 });
 
 $.ajaxSetup({
@@ -20,6 +21,7 @@ $.ajaxSetup({
     xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
   }
 });
+axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
 
 document.addEventListener('DOMContentLoaded', () => {
   var coin_inventory = new Vue({
@@ -32,17 +34,16 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     methods: {
       fetchCoins: function() {
-        var vm = this
-        $.get('coins', function(data) {
-          $.each(data.coins, function(index, value) {
-            vm.coins.push(value);
+        axios.get('coins').then(response => {
+          var ev = this;
+          $.each(response.data.coins, function(index, value) {
+            ev.coins.push(value);
           });
-        });
+        })
       },
       deleteCoin: function(coinId) {
         // this.coins.find(x => x.id === coinId);
         var url = 'coins/' + coinId
-        console.log("doing delet request for url " + url);
         var ev = this;
 
         $.ajax({
@@ -83,28 +84,27 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       methods: {
         addCoin: function() {
-          if (this.$v.$invalid) {
-            alert("errors");
-          } else {
-            this.ajaxInProgress = true;
-            var ev = this;
-            $.post( "coins", {
-              type: this.type,
-              amount: this.amount,
-              location: this.location,
-              purchased_at: this.purchased_at
-            })
-            $(document).ajaxComplete(function() {
-              ev.ajaxInProgress = false;
-            });
-            $(document).ajaxSuccess(function(event, xhr, settings) {
-              coin_inventory.coins.push(JSON.parse(xhr.responseText).coin);
-              ev.$toasted.show('New coin added!')
-            });
-            $( document ).ajaxError(function() {
-              $( ".log" ).text( "Triggered ajaxError handler." );
-            });
-          }
+          this.ajaxInProgress = true;
+          axios.post('coins', {
+            type: this.type,
+            amount: this.amount,
+            location: this.location,
+            purchased_at: this.purchased_at
+          })
+          .then(response => {
+            this.$toasted.show('New coin added!');
+            coin_inventory.coins.push(response.data.coin);
+          })
+          .catch(e => {
+            ev.$toasted.show('Error happened!');
+          })
+          .finally(function () {
+            this.ajaxInProgress = false;
+          });
+
+          this.amount = "";
+          this.location = "";
+          this.purchased_at = "";
         }
       },
       computed: {
