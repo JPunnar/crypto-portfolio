@@ -19,10 +19,3 @@
       %input.form-control{type: "date", "data-provide": "datepicker", "v-model": "purchased_at"}
       .small.error(v-if="!$v.purchased_at.required") * required
     %button.btn.btn-secondary{"v-on:click.prevent": "addCoin", ":disabled": "isDisabled"} Submit
-
--#
--# #coin_form
--#   = form_tag do
--#     .form-group
--#       = label_tag "Coin type"
--#       = select_tag :coin_type, options_for_select(Coin::TYPES), required: true

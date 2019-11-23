@@ -3,6 +3,9 @@ import Vuelidate from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
 import Toasted from 'vue-toasted';
 import axios from 'axios';
+import moment from 'moment'
+window.moment = moment;
+
 Vue.use(Vuelidate);
 Vue.use(Toasted, {
   position: 'top-center',
@@ -16,11 +19,6 @@ Vue.use(Toasted, {
   duration: 2200
 });
 
-$.ajaxSetup({
-  beforeSend: function (xhr) {
-    xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
-  }
-});
 axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -46,22 +44,14 @@ document.addEventListener('DOMContentLoaded', () => {
         var url = 'coins/' + coinId
         var ev = this;
 
-        // $.ajax({
-        //     url: url,
-        //     type: 'DELETE',
-        //     success: function(result) {
-        //         console.log(result);
-        //         var index = ev.coins.indexOf(ev.coins.find(x => x.id === coinId));
-        //         console.log("index: " + index);
-        //         ev.$delete(ev.coins, index);
-        //         // ev.$delete(ev.coins, ev.coins.find(x => x.id === coinId));
-        //     }
-        // });
         axios.delete(url).then(response => {
           var index = ev.coins.indexOf(ev.coins.find(x => x.id === coinId));
           ev.$delete(ev.coins, index);
           this.$toasted.show('Coin deleted!');
         })
+      },
+      formatDate: function(input) {
+        return moment(input).format('MM.DD.YYYY');
       }
     }
   });

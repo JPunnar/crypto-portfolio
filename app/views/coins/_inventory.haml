@@ -11,7 +11,7 @@
       %tr{"v-for" => "coin in coins"}
         %td {{ coin.type }}
         %td {{ coin.amount }}
-        %td {{ coin.purchased_at }}
+        %td {{ formatDate(coin.purchased_at) }}
         %td {{ coin.location }}
         %td {{ coin.value }}
         %td
