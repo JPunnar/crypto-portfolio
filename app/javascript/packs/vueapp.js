@@ -22,6 +22,7 @@ Vue.use(Toasted, {
 axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
 
 document.addEventListener('DOMContentLoaded', () => {
+
   var coin_inventory = new Vue({
     el: '#coin_inventory',
     data: {
@@ -42,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
       deleteCoin: function(coinId) {
         if (confirm("Want to delete?")) {
           var url = 'coins/' + coinId
-          
+
           axios.delete(url).then(response => {
             var index = this.coins.indexOf(this.coins.find(x => x.id === coinId));
             this.$delete(this.coins, index);
@@ -88,15 +89,20 @@ document.addEventListener('DOMContentLoaded', () => {
           .then(response => {
             this.$toasted.show('New coin added!');
             coin_inventory.coins.push(response.data.coin);
+            this.amount = "";
+            this.location = "";
+            this.purchased_at = moment(new Date()).format('YYYY-MM-DD');
           })
           .catch(error => {
-            this.$toasted.show('Error happened: ' + error.response.data.errors, {theme: 'bubble'});
+            this.$toasted.show('Error happened: ' + error.response.data.errors, { theme: 'bubble' });
+            $.each(error.response.data.keys, function(index, value) {
+              $('#' + value).addClass('is-invalid');
+            });
           })
           .finally(() => this.ajaxInProgress = false)
-
-          this.amount = "";
-          this.location = "";
-          this.purchased_at = moment(new Date()).format('YYYY-MM-DD');
+        },
+        clearError: function(id) {
+          $(id).removeClass('is-invalid');
         }
       },
       computed: {

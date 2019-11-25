@@ -2,20 +2,20 @@
   %form
     .form-group
       %label Coin type
-      %select.form-control{"v-model": "type"}
+      %select#type.form-control{"v-model": "type", "@input": "clearError('#type')"}
         %option Bitcoin
         %option Ethereum
         %option Ripple
     .form-group
       %label Amount of coins
-      %input.form-control{placeholder: "Enter amount", "v-model": "amount"}
+      %input#amount.form-control{placeholder: "Enter amount", "v-model": "amount", "@input": "clearError('#amount')"}
       .small.error(v-if="!$v.amount.required") * required
     .form-group
       %label Location
-      %input.form-control{placeholder: "Describe location of coins", "v-model": "location"}
+      %input#location.form-control{placeholder: "Describe location of coins", "v-model": "location", "@input": "clearError('#location')"}
       .small.error(v-if="!$v.location.required") * required
     .form-group
       %label Date of purchase
-      %input.form-control{type: "date", "data-provide": "datepicker", "v-model": "purchased_at"}
+      %input#purchased_at.form-control{type: "date", "data-provide": "datepicker", "v-model": "purchased_at", "@input": "clearError('#purchased_at')"}
       .small.error(v-if="!$v.purchased_at.required") * required
     %button.btn.btn-secondary{"v-on:click.prevent": "addCoin", ":disabled": "isDisabled"} Submit

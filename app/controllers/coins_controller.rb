@@ -10,7 +10,7 @@ class CoinsController < ApplicationController
       coin.save!
       render json: { coin: coin.as_json(methods: [:value]) }, status: :created and return
     else
-      render json: { errors: coin.errors.full_messages }, status: :unprocessable_entity
+      render json: { keys: coin.errors.messages.keys ,errors: coin.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
