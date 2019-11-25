@@ -1,24 +1,11 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This crypto portfolio can be used to keep track and see current market value of crypto-coins (Bitcoin, Ethereum, Ripple).
 
-Things you may want to cover:
+Hosted on heroku here: https://floating-sierra-68932.herokuapp.com
 
-* Ruby version
+To get this running locally, install ruby and rails (versions ruby 2.6.3, rails 5.2.3), necessary gems and lauch local server.
 
-* System dependencies
+Rates are fetched from Bitfinex API.
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Not intended for real world use-cases, use at your own risk
